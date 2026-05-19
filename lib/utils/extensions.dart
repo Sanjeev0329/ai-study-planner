@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 extension StringExt on String {
-  String get capitalize => isEmpty ? this : '\${this[0].toUpperCase()}\${substring(1)}';
+  String get capitalize => isEmpty ? this : '${this[0].toUpperCase()}${substring(1)}';
 }
 
 extension ContextExt on BuildContext {

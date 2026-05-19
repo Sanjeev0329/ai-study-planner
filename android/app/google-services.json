@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1040438910688",
+    "firebase_url": "https://ai-study-planner-b63a3-default-rtdb.firebaseio.com",
+    "project_id": "ai-study-planner-b63a3",
+    "storage_bucket": "ai-study-planner-b63a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040438910688:android:a15a7c28e3776a8fcdfa85",
+        "android_client_info": {
+          "package_name": "com.example.ai_study_planner_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040438910688-4vjt01cs5oddpt2hq5uo03tv249haj5t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ai_study_planner_app",
+            "certificate_hash": "440983d673f7e3092599b7331dc65f027d4ef5d6"
+          }
+        },
+        {
+          "client_id": "1040438910688-siu9hffo32gl1foguos0n60fj9voe8ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVLpT0YpCoud0EjnBf9qh6s1Y-6f3dwAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040438910688-siu9hffo32gl1foguos0n60fj9voe8ev.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1040438910688-b7j3i04hj3itav69f7ph0pt8dt1bsgnu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aiStudyPlannerApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

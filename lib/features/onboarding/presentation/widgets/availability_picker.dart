@@ -35,10 +35,10 @@ class AvailabilityPicker extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 32),
-        Text('Daily study hours: \${state.dailyHours}h', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+        Text('Daily study hours: ${state.dailyHours}h', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
         Slider(value: state.dailyHours.toDouble(), min: 1, max: 12, divisions: 11,
-            activeColor: AppColors.primary, label: '\${state.dailyHours}h',
+            activeColor: AppColors.primary, label: '${state.dailyHours}h',
             onChanged: (v) => notifier.setDailyHours(v.toInt())),
       ]),
     );

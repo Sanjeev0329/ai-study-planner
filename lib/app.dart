@@ -4,8 +4,10 @@ import 'core/theme/app_theme.dart';
 import 'features/ai_planner/presentations/screens/generate_plan_screen.dart';
 import 'providers/theme_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
+import 'features/auth/presentation/screens/splash_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'features/study_plan/presentation/screens/study_plan_screen.dart';
+import 'features/study_plan/presentation/screens/home_screen.dart';
+import 'features/study_plan/presentation/screens/plan_detail_screen.dart';
 import 'features/study_plan/presentation/screens/daily_plan_screen.dart';
 import 'features/pomodoro/presentation/screens/pomodoro_screen.dart';
 import 'features/progress/presentation/screens/progress_screen.dart';
@@ -24,17 +26,18 @@ class PrepwiseApp extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: '/login',
+      home: const SplashScreen(),
       routes: {
-        '/login':      (_) => const LoginScreen(),
-        '/onboarding': (_) => const OnboardingScreen(),
-        '/generate':   (_) => const GeneratePlanScreen(),
-        '/plan':       (_) => const StudyPlanScreen(),
-        '/daily':      (_) => const DailyPlanScreen(),
-        '/pomodoro':   (_) => const PomodoroScreen(),
-        '/progress':   (_) => const ProgressScreen(),
-        '/chat':       (_) => const ChatScreen(),
-        '/analytics':  (_) => const AnalyticsScreen(),
+        '/login':       (_) => const LoginScreen(),
+        '/onboarding':  (_) => const OnboardingScreen(),
+        '/generate':    (_) => const GeneratePlanScreen(),
+        '/plan':        (_) => const HomeScreen(),
+        '/plan-detail': (_) => const PlanDetailScreen(),
+        '/daily':       (_) => const DailyPlanScreen(),
+        '/pomodoro':    (_) => const PomodoroScreen(),
+        '/progress':    (_) => const ProgressScreen(),
+        '/chat':        (_) => const ChatScreen(),
+        '/analytics':   (_) => const AnalyticsScreen(),
       },
     );
   }

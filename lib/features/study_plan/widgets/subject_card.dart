@@ -34,7 +34,7 @@ class SubjectCard extends ConsumerWidget {
             const SizedBox(width: 8),
             Text(task.subject, style: const TextStyle(color: AppColors.textGrey, fontSize: 13)),
             const Spacer(),
-            Text('\${task.durationMinutes}m', style: const TextStyle(fontWeight: FontWeight.w600)),
+            Text('${task.durationMinutes}m', style: const TextStyle(fontWeight: FontWeight.w600)),
           ]),
           const SizedBox(height: 8),
           Text(task.topic, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),

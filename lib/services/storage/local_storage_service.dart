@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  static const _planKey      = 'cached_plan';
-  static const _onboardedKey = 'is_onboarded';
-  static const _themeKey     = 'is_dark_theme';
+  static const _planKey       = 'cached_plan';
+  static const _activePlanKey = 'active_plan_id';
+  static const _onboardedKey  = 'is_onboarded';
+  static const _themeKey      = 'is_dark_theme';
 
   static Future<void> cachePlan(Map<String, dynamic> map) async {
     final p = await SharedPreferences.getInstance();
@@ -23,6 +24,12 @@ class LocalStorageService {
 
   static Future<bool> isOnboarded() async =>
       (await SharedPreferences.getInstance()).getBool(_onboardedKey) ?? false;
+
+  static Future<void> setActivePlanId(String id) async =>
+      (await SharedPreferences.getInstance()).setString(_activePlanKey, id);
+
+  static Future<String?> getActivePlanId() async =>
+      (await SharedPreferences.getInstance()).getString(_activePlanKey);
 
   static Future<void> setDarkTheme(bool v) async =>
       (await SharedPreferences.getInstance()).setBool(_themeKey, v);

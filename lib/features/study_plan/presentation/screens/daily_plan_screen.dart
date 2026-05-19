@@ -20,16 +20,16 @@ class DailyPlanScreen extends ConsumerWidget {
     final done = day.sessions.where((s) => s.isCompleted).length;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Day \${day.day} — \${day.date}')),
+      appBar: AppBar(title: Text('Day ${day.day} — ${day.date}')),
       body: Column(children: [
         Container(
           margin: const EdgeInsets.all(16),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.08), borderRadius: BorderRadius.circular(16)),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            _Stat('Sessions', '\${day.sessions.length}'),
-            _Stat('Total', '\${totalMin}m'),
-            _Stat('Done', '\$done/\${day.sessions.length}'),
+            _Stat('Sessions', '${day.sessions.length}'),
+            _Stat('Total', '${totalMin}m'),
+            _Stat('Done', '$done/${day.sessions.length}'),
           ]),
         ),
         Expanded(child: ListView.builder(

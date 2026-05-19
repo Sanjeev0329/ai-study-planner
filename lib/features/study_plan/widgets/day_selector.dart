@@ -34,7 +34,7 @@ class DaySelector extends ConsumerWidget {
                 border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
               ),
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Day \${day.day}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
+                Text('Day ${day.day}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
                     color: isSelected ? Colors.white : AppColors.textDark)),
                 if (allDone) Icon(Icons.check_circle, size: 12, color: isSelected ? Colors.white : AppColors.easy),
               ]),
