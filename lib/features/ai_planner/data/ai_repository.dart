@@ -12,8 +12,9 @@ class AiRepository {
   Future<AiPlanResponseModel> generateAndSave(AiPlanRequestModel request, String userId) async {
     final result = await _gemini.generateStudyPlan(request);
     if (result.success) {
-      await _firestore.savePlan(userId, result.plan);
+      await _firestore.savePlan(userId, result.plan, isNew: true);
       await LocalStorageService.cachePlan(result.plan.toMap());
+      await LocalStorageService.setActivePlanId(result.plan.id);
       await LocalStorageService.setOnboarded(true);
     }
     return result;

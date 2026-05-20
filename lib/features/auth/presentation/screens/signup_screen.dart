@@ -248,6 +248,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ]),
                 ),
 
+                Center(
+                  child: TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/privacy'),
+                    child: const Text('Privacy Policy'),
+                  ),
+                ),
+
                 const SizedBox(height: 24),
               ],
             ),

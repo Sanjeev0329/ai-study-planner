@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../utils/time_helper.dart';
 import '../../pomodoro_provider.dart';
 
@@ -35,7 +36,7 @@ class _ArcPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = min(size.width, size.height) / 2 - 8;
     canvas.drawCircle(center, radius,
-        Paint()..color = Colors.grey.shade200..style = PaintingStyle.stroke..strokeWidth = 10);
+        Paint()..color = AppColors.glassBorder..style = PaintingStyle.stroke..strokeWidth = 10);
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2, 2 * pi * progress, false,
         Paint()..color = color..style = PaintingStyle.stroke..strokeWidth = 10..strokeCap = StrokeCap.round);
   }

@@ -25,15 +25,16 @@ class _State extends ConsumerState<ChatInputField> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          border: Border(top: BorderSide(color: Colors.grey.shade200))),
+      decoration: const BoxDecoration(
+          color: AppColors.bgSecondary,
+          border: Border(top: BorderSide(color: AppColors.glassBorder))),
       child: Row(children: [
         Expanded(child: TextField(
           controller: _ctrl,
           decoration: InputDecoration(
             hintText: 'Ask anything about your studies...',
-            filled: true, fillColor: Colors.grey.shade100,
+            filled: true,
+            fillColor: AppColors.bgPrimary,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           ),

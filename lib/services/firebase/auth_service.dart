@@ -9,6 +9,13 @@ class AuthService {
   Stream<User?> get authStateChanges => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
 
+  UserModel userModelFromFirebase(User user) => UserModel(
+        uid: user.uid,
+        email: user.email ?? '',
+        name: user.displayName?.trim().isNotEmpty == true ? user.displayName! : 'Student',
+        photoUrl: user.photoURL,
+      );
+
   // ── Google Sign-In ────────────────────────────────────────
   Future<UserModel?> signInWithGoogle() async {
     try {
@@ -34,12 +41,7 @@ class AuthService {
       final user = result.user;
       if (user == null) return null;
 
-      return UserModel(
-        uid:      user.uid,
-        email:    user.email ?? '',
-        name:     user.displayName ?? '',
-        photoUrl: user.photoURL,
-      );
+      return userModelFromFirebase(user);
     } on FirebaseAuthException catch (e) {
       print('GOOGLE SIGN-IN ERROR: ${e.code} — ${e.message}');
       return null;
@@ -56,12 +58,7 @@ class AuthService {
           email: email, password: password);
       final user = result.user;
       if (user == null) return null;
-      return UserModel(
-        uid:      user.uid,
-        email:    user.email ?? '',
-        name:     user.displayName ?? '',
-        photoUrl: user.photoURL,
-      );
+      return userModelFromFirebase(user);
     } on FirebaseAuthException catch (e) {
       print('EMAIL LOGIN ERROR: ${e.code} — ${e.message}');
       return null;

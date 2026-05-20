@@ -38,7 +38,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final labels = ['Add Subjects', 'Set Availability', 'Set Priorities'];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Step \${_page + 1} of 3: \${labels[_page]}'),
+        title: Text('Step ${_page + 1} of 3: ${labels[_page]}'),
         leading: _page > 0 ? IconButton(icon: const Icon(Icons.arrow_back),
             onPressed: () => _pc.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut)) : null,
       ),

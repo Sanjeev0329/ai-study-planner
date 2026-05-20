@@ -20,7 +20,7 @@ class TaskTile extends ConsumerWidget {
       ),
       title: Text(task.topic,
           style: TextStyle(decoration: task.isCompleted ? TextDecoration.lineThrough : null)),
-      subtitle: Text('\${task.subject} · \${task.durationMinutes}min · \${task.difficulty}'),
+      subtitle: Text('${task.subject} · ${task.durationMinutes}min · ${task.difficulty}'),
     );
   }
 }

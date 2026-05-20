@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../progress/progress_provider.dart';
+import '../analytics_provider.dart';
 
 class SubjectPerformanceChart extends ConsumerWidget {
   const SubjectPerformanceChart({super.key});
@@ -24,7 +24,7 @@ class SubjectPerformanceChart extends ConsumerWidget {
                 backgroundColor: Colors.grey.shade200, valueColor: AlwaysStoppedAnimation(color)),
           )),
           const SizedBox(width: 8),
-          Text('\${(e.value.value * 100).toStringAsFixed(0)}%',
+          Text('${(e.value.value * 100).toStringAsFixed(0)}%',
               style: TextStyle(fontSize: 13, color: color, fontWeight: FontWeight.w600)),
         ]),
       );

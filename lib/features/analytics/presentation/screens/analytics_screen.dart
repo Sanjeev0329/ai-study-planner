@@ -22,11 +22,11 @@ class AnalyticsScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Analytics')),
       body: ListView(padding: const EdgeInsets.all(16), children: [
         Row(children: [
-          _StatCard('Done', '\$done/\$total', AppColors.primary),
+          _StatCard('Done', '$done/$total', AppColors.primary),
           const SizedBox(width: 12),
-          _StatCard('Hours', '\${(mins / 60).toStringAsFixed(1)}h', AppColors.easy),
+          _StatCard('Hours', '${(mins / 60).toStringAsFixed(1)}h', AppColors.easy),
           const SizedBox(width: 12),
-          _StatCard('Rate', '\${total == 0 ? 0 : (done / total * 100).toStringAsFixed(0)}%', AppColors.medium),
+          _StatCard('Rate', '${total == 0 ? 0 : (done / total * 100).toStringAsFixed(0)}%', AppColors.medium),
         ]),
         const SizedBox(height: 24),
         const Text('Weekly study time', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),

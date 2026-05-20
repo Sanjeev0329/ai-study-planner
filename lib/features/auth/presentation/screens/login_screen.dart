@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/app_background.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield.dart';
 import '../../../../providers/app_provider.dart';
@@ -127,12 +128,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
-          child: Form(
-            key: _formKey,
-            child: Column(
+      body: AppBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+            child: Form(
+              key: _formKey,
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 32),
@@ -141,19 +143,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Center(
                   child: Column(children: [
                     Container(
-                      width: 72, height: 72,
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.accentCyan.withValues(alpha: 0.35),
+                            blurRadius: 24,
+                          ),
+                        ],
                       ),
-                      child: const Icon(Icons.school_rounded, color: Colors.white, size: 40),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          'assets/images/aistudyicon.png',
+                          width: 88,
+                          height: 88,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Container(
+                            width: 88,
+                            height: 88,
+                            color: AppColors.bgSecondary,
+                            child: const Icon(Icons.auto_awesome, color: AppColors.accentCyan, size: 40),
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     const Text('Welcome back',
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: AppColors.textWhite)),
                     const SizedBox(height: 6),
                     const Text('Sign in to continue studying',
-                        style: TextStyle(fontSize: 15, color: AppColors.textGrey)),
+                        style: TextStyle(fontSize: 15, color: AppColors.textSecondary)),
                   ]),
                 ),
 
@@ -161,7 +182,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 // ── Email (CustomTextField) ───────────────
                 const Text('Email',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textDark)),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textWhite)),
                 const SizedBox(height: 8),
                 CustomTextField(
                   hint: 'you@example.com',
@@ -181,7 +202,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Note: CustomTextField doesn't have obscureText toggle built in,
                 // so we extend it here just for the eye icon suffix.
                 const Text('Password',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textDark)),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textWhite)),
                 const SizedBox(height: 8),
                 CustomTextField(
                   hint: 'Enter your password',
@@ -225,12 +246,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 // ── OR Divider ────────────────────────────
                 Row(children: [
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text('or', style: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
+                  const Expanded(child: Divider(color: AppColors.glassBorder)),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text('or', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
                   ),
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  const Expanded(child: Divider(color: AppColors.glassBorder)),
                 ]),
 
                 const SizedBox(height: 20),
@@ -249,7 +270,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Center(
                   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     const Text("Don't have an account? ",
-                        style: TextStyle(color: AppColors.textGrey, fontSize: 14)),
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
                     GestureDetector(
                       onTap: () => Navigator.push(
                         context,
@@ -262,10 +283,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
 
                 const SizedBox(height: 24),
+
+                Center(
+                  child: TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/privacy'),
+                    child: const Text('Privacy Policy'),
+                  ),
+                ),
+
+                const SizedBox(height: 8),
               ],
             ),
           ),
         ),
+      ),
       ),
     );
   }

@@ -77,8 +77,11 @@ class _State extends ConsumerState<StudyPlanScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         onTap: (i) {
-          if (i == 1) Navigator.pushNamed(context, '/progress');
-          if (i == 2) Navigator.pushNamed(context, '/pomodoro');
+          if (i == 1) {
+            Navigator.pushNamed(context, '/progress');
+          } else if (i == 2) {
+            Navigator.pushNamed(context, '/pomodoro');
+          }
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Plan'),
