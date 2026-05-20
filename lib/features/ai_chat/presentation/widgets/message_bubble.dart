@@ -12,7 +12,6 @@ class MessageBubble extends StatelessWidget {
 
     // Dark theme: assistant = readable slate surface + light text (never white-on-white).
     final assistantBg = AppColors.bgSecondary;
-    const assistantTextColor = AppColors.textSecondary;
     const assistantBodyColor = AppColors.textWhite;
 
     return Align(
