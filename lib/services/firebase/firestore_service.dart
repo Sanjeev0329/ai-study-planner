@@ -38,6 +38,10 @@ class FirestoreService {
     return StudyPlanModel.fromMap(data);
   }
 
+  Future<void> deletePlan(String uid, String planId) async {
+    await _db.collection('users').doc(uid).collection('plans').doc(planId).delete();
+  }
+
   Future<void> saveProgress(ProgressModel p) async {
     await _db.collection('users').doc(p.userId).collection('progress').doc('current').set(p.toMap());
   }

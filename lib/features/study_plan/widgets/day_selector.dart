@@ -13,7 +13,7 @@ class DaySelector extends ConsumerWidget {
     if (plan == null) return const SizedBox();
 
     return SizedBox(
-      height: 60,
+      height: 44,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -21,23 +21,57 @@ class DaySelector extends ConsumerWidget {
         itemBuilder: (_, i) {
           final day = plan.schedule[i];
           final isSelected = i == selected;
-          final allDone = day.sessions.isNotEmpty && day.sessions.every((s) => s.isCompleted);
-          return GestureDetector(
-            onTap: () => ref.read(selectedDayProvider.notifier).state = i,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              margin: const EdgeInsets.only(right: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : (allDone ? AppColors.easy.withOpacity(0.1) : Colors.transparent),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+          final allDone =
+              day.sessions.isNotEmpty && day.sessions.every((s) => s.isCompleted);
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => ref.read(selectedDayProvider.notifier).state = i,
+                borderRadius: BorderRadius.circular(22),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? AppColors.primary
+                        : allDone
+                            ? AppColors.easy.withValues(alpha: 0.12)
+                            : AppColors.bgSecondary,
+                    borderRadius: BorderRadius.circular(22),
+                    border: Border.all(
+                      color: isSelected
+                          ? AppColors.primary
+                          : allDone
+                              ? AppColors.easy.withValues(alpha: 0.4)
+                              : AppColors.glassBorder,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Day ${day.day}',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.white : AppColors.textWhite,
+                        ),
+                      ),
+                      if (allDone) ...[
+                        const SizedBox(width: 6),
+                        Icon(
+                          Icons.check_circle,
+                          size: 14,
+                          color: isSelected ? Colors.white : AppColors.easy,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Day ${day.day}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
-                    color: isSelected ? Colors.white : AppColors.textDark)),
-                if (allDone) Icon(Icons.check_circle, size: 12, color: isSelected ? Colors.white : AppColors.easy),
-              ]),
             ),
           );
         },

@@ -39,4 +39,14 @@ class LocalStorageService {
 
   static Future<void> clearAll() async =>
       (await SharedPreferences.getInstance()).clear();
+
+  /// Call when the active cached plan document was deleted.
+  static Future<void> clearCacheIfActivePlan(String planId) async {
+    final p = await SharedPreferences.getInstance();
+    final active = p.getString(_activePlanKey);
+    if (active == planId) {
+      await p.remove(_activePlanKey);
+      await p.remove(_planKey);
+    }
+  }
 }

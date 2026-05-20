@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/app_background.dart';
+import '../../../../core/widgets/app_bar_actions.dart';
 import '../../../analytics/presentation/analytics_provider.dart';
 import '../../../study_plan/study_plan_provider.dart';
 
@@ -67,8 +69,10 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
         : examDate.difference(DateTime.now()).inDays.clamp(0, 9999);
 
     return Scaffold(
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         title: Text(plan.displayTitle),
+        actions: const [AppBarMenuButton()],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -80,7 +84,8 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
           },
         ),
       ),
-      body: ListView(
+      body: AppBackground(
+        child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           Center(
@@ -94,7 +99,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                   child: CircularProgressIndicator(
                     value: completionRate,
                     strokeWidth: 10,
-                    backgroundColor: Colors.grey.shade200,
+                    backgroundColor: AppColors.glassBorder,
                     color: AppColors.primary,
                   ),
                 ),
@@ -146,6 +151,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
             label: const Text('View detailed analytics'),
           ),
         ],
+        ),
       ),
     );
   }
@@ -203,8 +209,8 @@ class _SubjectProgressRow extends StatelessWidget {
           child: LinearProgressIndicator(
             value: progress,
             minHeight: 8,
-            backgroundColor: Colors.grey.shade200,
-            color: AppColors.primary,
+            backgroundColor: AppColors.glassBorder,
+            color: AppColors.accentCyan,
           ),
         ),
       ]),

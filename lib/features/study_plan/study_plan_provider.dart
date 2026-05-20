@@ -15,6 +15,8 @@ class PlansListNotifier extends StateNotifier<List<StudyPlanModel>> {
     state = await _ref.read(firestoreServiceProvider).getAllPlans(user.uid);
   }
 
+  void clear() => state = [];
+
   void upsert(StudyPlanModel plan) {
     final index = state.indexWhere((p) => p.id == plan.id);
     if (index >= 0) {
@@ -25,11 +27,28 @@ class PlansListNotifier extends StateNotifier<List<StudyPlanModel>> {
       state = [plan, ...state];
     }
   }
+
+  /// Deletes plan from Firestore and local list. Clears active plan cache if it was deleted.
+  Future<bool> deletePlan(String planId) async {
+    final user = _ref.read(userProvider);
+    if (user == null) return false;
+    await _ref.read(firestoreServiceProvider).deletePlan(user.uid, planId);
+    state = state.where((p) => p.id != planId).toList();
+
+    final current = _ref.read(studyPlanProvider);
+    if (current?.id == planId) {
+      _ref.read(studyPlanProvider.notifier).clear();
+      await LocalStorageService.clearCacheIfActivePlan(planId);
+    }
+    return true;
+  }
 }
 
 class StudyPlanNotifier extends StateNotifier<StudyPlanModel?> {
   final Ref _ref;
   StudyPlanNotifier(this._ref) : super(null);
+
+  void clear() => state = null;
 
   void setPlan(StudyPlanModel plan) {
     state = plan;

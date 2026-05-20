@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/app_background.dart';
+import '../../../../core/widgets/app_bar_actions.dart';
 import '../../pomodoro_provider.dart';
 import '../widgets/timer_display.dart';
 import '../widgets/control_buttons.dart';
@@ -26,14 +28,17 @@ class PomodoroScreen extends ConsumerWidget {
             : AppColors.secondary;
 
     return Scaffold(
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         title: const Text('Focus Timer'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => _goBack(context),
         ),
+        actions: const [AppBarMenuButton()],
       ),
-      body: SafeArea(
+      body: AppBackground(
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -58,7 +63,7 @@ class PomodoroScreen extends ConsumerWidget {
                         color: selected ? modeColor : Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: selected ? modeColor : Colors.grey.shade300,
+                          color: selected ? modeColor : AppColors.glassBorder,
                         ),
                       ),
                       child: Text(
@@ -97,6 +102,7 @@ class PomodoroScreen extends ConsumerWidget {
               const SizedBox(height: 16),
             ],
           ),
+        ),
         ),
       ),
     );

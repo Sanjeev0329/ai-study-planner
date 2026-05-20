@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/app_background.dart';
+import '../../../../core/widgets/app_bar_actions.dart';
 import '../../../study_plan/study_plan_provider.dart';
 import '../chat_provider.dart';
 import '../widgets/message_bubble.dart';
@@ -54,6 +56,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     });
 
     return Scaffold(
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +67,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 plan.displayTitle,
                 style: const TextStyle(
                   fontSize: 12,
-                  color: AppColors.textGrey,
+                  color: AppColors.textSecondary,
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -74,8 +77,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: const [AppBarMenuButton()],
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           if (plan != null)
             Container(
@@ -111,6 +116,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           ),
           const ChatInputField(),
         ],
+        ),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/app_background.dart';
+import '../../../../core/widgets/app_bar_actions.dart';
 import '../../../../providers/user_provider.dart';
 import '../../study_plan_provider.dart';
 import '../../widgets/day_selector.dart';
@@ -21,7 +23,10 @@ class PlanDetailScreen extends ConsumerWidget {
       );
     }
 
+    final percent = (plan.completionRate * 100).round();
+
     return Scaffold(
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         title: Text(plan.displayTitle),
         leading: IconButton(
@@ -36,107 +41,101 @@ class PlanDetailScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.auto_awesome),
+            icon: const Icon(Icons.auto_awesome_outlined),
             tooltip: 'AI Study Assistant',
             onPressed: () => Navigator.pushNamed(context, '/chat'),
           ),
           IconButton(
-            icon: const Icon(Icons.trending_up),
+            icon: const Icon(Icons.trending_up_outlined),
             tooltip: 'Progress',
             onPressed: () => Navigator.pushNamed(context, '/progress'),
           ),
+          const AppBarMenuButton(),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Hello, ${user?.name.split(' ').first ?? 'Student'}!',
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  'Exam: ${plan.examDate} · ${plan.totalDays} days · '
-                  '${(plan.completionRate * 100).toStringAsFixed(0)}% complete',
-                  style: const TextStyle(color: AppColors.textGrey),
-                ),
-                const SizedBox(height: 8),
-                Row(
+      body: AppBackground(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: GlassCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: plan.completionRate,
-                          minHeight: 6,
-                          backgroundColor: Colors.grey.shade200,
-                          color: AppColors.primary,
-                        ),
-                      ),
+                    Text(
+                      'Hello, ${user?.name.split(' ').first ?? 'Student'}!',
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(width: 10),
-                    Material(
-                      color: AppColors.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(20),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () => Navigator.pushNamed(context, '/chat'),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.auto_awesome, size: 16, color: AppColors.primary),
-                              SizedBox(width: 6),
-                              Text(
-                                'Ask AI',
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
+                    const SizedBox(height: 4),
+                    Text(
+                      'Exam ${plan.examDate} · ${plan.totalDays} days left',
+                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                    ),
+                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Text(
+                          '$percent%',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.accentCyan,
                           ),
                         ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${plan.completedTaskCount}/${plan.totalTaskCount} tasks',
+                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: LinearProgressIndicator(
+                        value: plan.completionRate,
+                        minHeight: 8,
+                        backgroundColor: AppColors.bgPrimary,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
-          const DaySelector(),
-          Expanded(
-            child: Consumer(
-              builder: (context, ref, _) {
-                final dayIndex = ref.watch(selectedDayProvider);
-                if (dayIndex >= plan.schedule.length) return const SizedBox();
-                final day = plan.schedule[dayIndex];
-                return ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: [
-                    ...day.sessions.asMap().entries.map(
-                          (e) => SubjectCard(
-                            task: e.value,
-                            dayIndex: dayIndex,
-                            sessionIndex: e.key,
+            const SizedBox(height: 12),
+            const DaySelector(),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final dayIndex = ref.watch(selectedDayProvider);
+                  if (dayIndex >= plan.schedule.length) return const SizedBox();
+                  final day = plan.schedule[dayIndex];
+                  return ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 88),
+                    children: [
+                      ...day.sessions.asMap().entries.map(
+                            (e) => SubjectCard(
+                              task: e.value,
+                              dayIndex: dayIndex,
+                              sessionIndex: e.key,
+                            ),
                           ),
-                        ),
-                    const SizedBox(height: 80),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        onTap: (i) {
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: AppColors.bgSecondary,
+        indicatorColor: AppColors.primary.withValues(alpha: 0.25),
+        selectedIndex: 0,
+        onDestinationSelected: (i) {
           if (i == 0) {
             Navigator.popUntil(context, ModalRoute.withName('/plan'));
           } else if (i == 1) {
@@ -145,10 +144,10 @@ class PlanDetailScreen extends ConsumerWidget {
             Navigator.pushNamed(context, '/pomodoro');
           }
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.trending_up), label: 'Progress'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer_outlined), label: 'Pomodoro'),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.trending_up_outlined), label: 'Progress'),
+          NavigationDestination(icon: Icon(Icons.timer_outlined), label: 'Focus'),
         ],
       ),
     );

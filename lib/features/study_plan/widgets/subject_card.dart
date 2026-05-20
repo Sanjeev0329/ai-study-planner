@@ -11,62 +11,89 @@ class SubjectCard extends ConsumerWidget {
 
   Color get _diffColor {
     switch (task.difficulty) {
-      case 'easy': return AppColors.easy;
-      case 'hard': return AppColors.hard;
-      default:     return AppColors.medium;
+      case 'easy':
+        return AppColors.easy;
+      case 'hard':
+        return AppColors.hard;
+      default:
+        return AppColors.medium;
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Padding(
         padding: const EdgeInsets.all(14),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(color: _diffColor.withOpacity(0.12), borderRadius: BorderRadius.circular(20)),
-              child: Text(task.difficulty.toUpperCase(),
-                  style: TextStyle(fontSize: 11, color: _diffColor, fontWeight: FontWeight.w600)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: _diffColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    task.difficulty.toUpperCase(),
+                    style: TextStyle(fontSize: 10, color: _diffColor, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(task.subject, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                const Spacer(),
+                Text('${task.durationMinutes}m', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+              ],
             ),
-            const SizedBox(width: 8),
-            Text(task.subject, style: const TextStyle(color: AppColors.textGrey, fontSize: 13)),
-            const Spacer(),
-            Text('${task.durationMinutes}m', style: const TextStyle(fontWeight: FontWeight.w600)),
-          ]),
-          const SizedBox(height: 8),
-          Text(task.topic, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 6),
-          Row(children: [
-            const Icon(Icons.lightbulb_outline, size: 14, color: AppColors.medium),
-            const SizedBox(width: 4),
-            Expanded(child: Text(task.tip, style: const TextStyle(fontSize: 13, color: AppColors.textGrey))),
-          ]),
-          const SizedBox(height: 10),
-          Row(children: [
-            Expanded(child: OutlinedButton.icon(
-              icon: const Icon(Icons.timer_outlined, size: 16),
-              label: const Text('Timer'),
-              onPressed: () => Navigator.pushNamed(context, '/pomodoro'),
-            )),
-            const SizedBox(width: 8),
-            if (!task.isCompleted)
-              Expanded(child: ElevatedButton.icon(
-                icon: const Icon(Icons.check, size: 16),
-                label: const Text('Done'),
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.easy),
-                onPressed: () => ref.read(studyPlanProvider.notifier).markTaskDone(dayIndex, sessionIndex),
-              ))
-            else
-              const Expanded(child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Icon(Icons.check_circle, color: AppColors.easy, size: 18),
-                SizedBox(width: 6),
-                Text('Completed', style: TextStyle(color: AppColors.easy, fontWeight: FontWeight.w500)),
-              ]))),
-          ]),
-        ]),
+            const SizedBox(height: 10),
+            Text(task.topic, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, height: 1.3)),
+            if (task.tip.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                task.tip,
+                style: const TextStyle(fontSize: 12, color: AppColors.textSecondary, height: 1.35),
+              ),
+            ],
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.timer_outlined, size: 16),
+                    label: const Text('Timer'),
+                    onPressed: () => Navigator.pushNamed(context, '/pomodoro'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                if (!task.isCompleted)
+                  Expanded(
+                    child: FilledButton.icon(
+                      icon: const Icon(Icons.check, size: 16),
+                      label: const Text('Done'),
+                      style: FilledButton.styleFrom(backgroundColor: AppColors.easy),
+                      onPressed: () => ref
+                          .read(studyPlanProvider.notifier)
+                          .markTaskDone(dayIndex, sessionIndex),
+                    ),
+                  )
+                else
+                  const Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.check_circle, color: AppColors.easy, size: 18),
+                        SizedBox(width: 6),
+                        Text('Completed', style: TextStyle(color: AppColors.easy, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
