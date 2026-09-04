@@ -6,7 +6,7 @@ with daily plans, a Pomodoro timer, progress analytics, reminders, and an
 AI study chat.
 
 ## Features
-
+............
 - Email/password and Google authentication
 - First-use onboarding
 - AI-generated study plans
