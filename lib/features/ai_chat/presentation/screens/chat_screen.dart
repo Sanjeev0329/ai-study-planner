@@ -5,6 +5,7 @@ import '../chat_provider.dart';
 import '../widgets/message_bubble.dart';
 import '../widgets/chat_input_field.dart';
 
+
 class ChatScreen extends ConsumerWidget {
   const ChatScreen({super.key});
 
@@ -12,6 +13,7 @@ class ChatScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final messages = ref.watch(chatProvider);
     final scrollCtrl = ScrollController();
+    // Listen for changes in the chatProvider and scroll to the bottom when new messages are added
 
     ref.listen(chatProvider, (_, __) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
