@@ -12,7 +12,7 @@ class ChatNotifier extends StateNotifier<List<ChatMessage>> {
   final Ref _ref;
   ChatNotifier(this._ref) : super(const [
     ChatMessage(text: "Hi! I'm your Prepwise AI assistant. Ask me anything about your study plan or topics!", isUser: false),
-  ]);
+  ]);// ChatNotifier constructor initializes the state with a welcome message from the AI assistant.
 
   bool _loading = false;
   bool get isLoading => _loading;
