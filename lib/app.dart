@@ -24,7 +24,7 @@ class PrepwiseApp extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: '/login',
+      initialRoute: '/login',// Set the initial route to the login screen
       routes: {
         '/login':      (_) => const LoginScreen(),
         '/onboarding': (_) => const OnboardingScreen(),
