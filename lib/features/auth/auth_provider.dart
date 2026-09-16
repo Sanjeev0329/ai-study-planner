@@ -3,6 +3,7 @@ import '../../../models/user_model.dart';
 import '../../../providers/app_provider.dart';
 
 final authStateProvider = StreamProvider<UserModel?>((ref) {
+  // Watch the authServiceProvider to get the authentication service
   final auth = ref.watch(authServiceProvider);
   return auth.authStateChanges.map((user) {
     if (user == null) return null;
