@@ -7,6 +7,7 @@ import '../../widgets/task_title.dart';
 
 class DailyPlanScreen extends ConsumerWidget {
   const DailyPlanScreen({super.key});
+  // This screen displays the daily study plan for a specific day, including the number of sessions, total duration, and completed sessions. It uses Riverpod to manage state and retrieve the study plan data.
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
